@@ -7,16 +7,16 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
   providedIn: 'root'
 })
 export class SleepService {
-	private static LoadDefaultData:boolean = true;
-	public static AllSleepData:SleepData[] = [];
-	public static AllOvernightData:OvernightSleepData[] = [];
-	public static AllSleepinessData:StanfordSleepinessData[] = [];
+  private static LoadDefaultData = true;
+  public static AllSleepData: SleepData[] = [];
+  public static AllOvernightData: OvernightSleepData[] = [];
+  public static AllSleepinessData: StanfordSleepinessData[] = [];
 
   constructor() {
-  	if(SleepService.LoadDefaultData) {
+    if (SleepService.LoadDefaultData) {
       this.addDefaultData();
-  		SleepService.LoadDefaultData = false;
-  	}
+      SleepService.LoadDefaultData = false;
+    }
   }
 
   private addDefaultData() {
@@ -25,13 +25,13 @@ export class SleepService {
     this.logOvernightData(new OvernightSleepData(new Date('November 12, 2018 23:11:00'), new Date('November 13, 2018 08:03:00')));
   }
 
-  public logOvernightData(sleepData:OvernightSleepData) {
-  	SleepService.AllSleepData.push(sleepData);
-  	SleepService.AllOvernightData.push(sleepData);
+  public logOvernightData(sleepData: OvernightSleepData) {
+    SleepService.AllSleepData.push(sleepData);
+    SleepService.AllOvernightData.push(sleepData);
   }
 
-  public logSleepinessData(sleepData:StanfordSleepinessData) {
-  	SleepService.AllSleepData.push(sleepData);
-  	SleepService.AllSleepinessData.push(sleepData);
+  public logSleepinessData(sleepData: StanfordSleepinessData) {
+    SleepService.AllSleepData.push(sleepData);
+    SleepService.AllSleepinessData.push(sleepData);
   }
 }
