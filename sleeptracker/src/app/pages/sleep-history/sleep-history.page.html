@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sleep Logger</ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content padding>
+
+  <ion-grid *ngIf="allOvernightSleepData">
+    <ion-row *ngFor="let data of allOvernightSleepData">
+      <ion-col>{{data.sleepStart.toLocaleString()}}</ion-col>
+      <ion-col>{{data.sleepEnd.toLocaleString()}}</ion-col>
+      <ion-col>{{data.summaryString()}}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+  
