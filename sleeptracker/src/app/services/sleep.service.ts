@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+import { SampleDataService } from './sample-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class SleepService {
   public static AllOvernightData: OvernightSleepData[] = [];
   public static AllSleepinessData: StanfordSleepinessData[] = [];
 
-  constructor() {
-    if (SleepService.LoadDefaultData) {
+  constructor(private sampleDataService: SampleDataService) {
+   if (SleepService.LoadDefaultData) {
       this.addDefaultData();
       SleepService.LoadDefaultData = false;
     }
@@ -25,13 +26,18 @@ export class SleepService {
     this.logOvernightData(new OvernightSleepData(new Date('November 12, 2018 23:11:00'), new Date('November 13, 2018 08:03:00')));
   }
 
-  public logOvernightData(sleepData: OvernightSleepData) {
-    SleepService.AllSleepData.push(sleepData);
-    SleepService.AllOvernightData.push(sleepData);
+  async addSampleData() {
+    return await this.sampleDataService.logSampleData(this);
+  }
+
+  public logOvernightData(data) {
+    SleepService.AllSleepData.push(data);
+    SleepService.AllOvernightData.push(data);
   }
 
   public logSleepinessData(sleepData: StanfordSleepinessData) {
     SleepService.AllSleepData.push(sleepData);
     SleepService.AllSleepinessData.push(sleepData);
   }
+
 }

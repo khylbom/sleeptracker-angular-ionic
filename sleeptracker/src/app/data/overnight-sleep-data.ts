@@ -1,8 +1,8 @@
 import { SleepData } from './sleep-data';
 
 export class OvernightSleepData extends SleepData {
-    private sleepStart: Date;
-    private sleepEnd: Date;
+    protected sleepStart: Date;
+    protected sleepEnd: Date;
 
     constructor(sleepStart: Date, sleepEnd: Date) {
         super();
