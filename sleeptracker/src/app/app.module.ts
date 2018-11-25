@@ -9,9 +9,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EditOvernightDataComponent } from './components/edit-overnight-data/edit-overnight-data.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EditOvernightDataComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

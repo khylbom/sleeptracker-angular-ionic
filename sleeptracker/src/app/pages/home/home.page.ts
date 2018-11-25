@@ -8,8 +8,7 @@ import { SleepService } from '../../services/sleep.service';
 })
 export class HomePage implements OnInit {
 
-  constructor(private sleepService: SleepService) {
-    this.getSampleData();
+  constructor(public sleepService: SleepService) {
   }
 
   ngOnInit() { }
@@ -17,10 +16,6 @@ export class HomePage implements OnInit {
   /* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
   get allSleepData() {
     return SleepService.AllSleepData;
-  }
-
-  async getSampleData() {
-    return await this.sleepService.getSampleData();
   }
 
 }

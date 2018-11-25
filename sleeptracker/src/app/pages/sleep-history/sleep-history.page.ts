@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SleepService } from '../../services/sleep.service';
+import { OvernightSleepData } from '../../data/overnight-sleep-data';
 
 @Component({
   selector: 'app-sleep-history',
@@ -8,10 +9,9 @@ import { SleepService } from '../../services/sleep.service';
 })
 export class SleepHistoryPage implements OnInit {
 
-  constructor(private sleepService: SleepService) { }
+  constructor(public sleepService: SleepService) { }
 
   ngOnInit() {
-    this.getSampleData();
   }
 
   /* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
@@ -21,10 +21,6 @@ export class SleepHistoryPage implements OnInit {
 
   get allOvernightSleepData() {
     return SleepService.AllOvernightData;
-  }
-
-  async getSampleData() {
-    return await this.sleepService.getSampleData();
   }
 
 }
