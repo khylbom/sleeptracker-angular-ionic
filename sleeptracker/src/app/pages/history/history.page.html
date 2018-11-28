@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Sleep History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClickAdd()">
+        <ion-icon slot="start" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content padding>
+
+  <ion-item detail-push *ngFor="let item of allSleepData" href="/data/item.id">
+    <ion-col>{{item.dateString()}}</ion-col>
+    <ion-col>{{item.summaryString()}}</ion-col>
+    <ion-col>{{item.id}}</ion-col>
+  </ion-item>
+
+</ion-content>
+  

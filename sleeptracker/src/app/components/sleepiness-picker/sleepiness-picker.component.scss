@@ -1,0 +1,10 @@
+ion-range {
+  // --bar-height: 0.2em;
+  --knob-size: 1em;
+  ion-icon[slot="start"] {
+    margin-right: 10px;
+  }
+  ion-icon[slot="end"] {
+    margin-left: 10px;
+  }
+}
