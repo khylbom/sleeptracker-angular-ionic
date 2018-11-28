@@ -1,0 +1,10 @@
+<ion-item *ngIf="show">
+  <ion-label position="fixed">{{label}}</ion-label>
+  <ion-datetime #picker [(ngModel)]="date"
+      [displayFormat]="displayFormat"
+      [pickerFormat]="pickerFormat"
+      [value]="initDate"
+      [min]="minDate"
+      [placeholder]="placeholder" >
+  </ion-datetime>
+</ion-item>

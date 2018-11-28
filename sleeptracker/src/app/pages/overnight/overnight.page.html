@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-back-button defaultHref="history"></ion-back-button>
+      </ion-buttons>
+    <ion-title>{{overnightData.shortDate()}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onEdit()">
+        Edit
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list line="none">
+    <!-- Date header w/forward and back button arrows-->
+    <ion-item color="tertiary">
+      <ion-icon slot="start" name="arrow-back" size="small" color="light"></ion-icon>
+      <ion-label><h5 text-center>{{overnightData.shortDate()}}</h5></ion-label>
+      <ion-icon slot="end" name="arrow-forward" color="light"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>Went to Bed</ion-label>
+      <ion-text text-right>{{overnightData.sleepStartTime()}}</ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="sunny"></ion-icon>
+      <ion-label>Woke Up</ion-label>
+      <ion-text text-right>{{overnightData.sleepEndTime()}}</ion-text>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

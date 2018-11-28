@@ -1,0 +1,15 @@
+<ion-list lines="none">
+  <ion-list-header color="light">
+    <ion-label>Stanford Sleepiness Scale</ion-label>
+    <ion-badge item-end color="primary">{{value}}</ion-badge>
+  </ion-list-header>
+  <ion-item>
+    <ion-range min="1" max="7" step="1" pin=true snaps=true color="primary" [(ngModel)]="value" (ionChange)="updateScaleValue()">
+      <ion-icon slot="start" name="happy"></ion-icon> 
+      <ion-icon slot="end" name="sad"></ion-icon>
+    </ion-range>
+  </ion-item>
+  <ion-item>
+    {{scaleValue}}
+  </ion-item>
+</ion-list>
