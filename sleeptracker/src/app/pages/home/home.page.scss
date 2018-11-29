@@ -1,0 +1,26 @@
+$scale-color-1: color(mediumseagreen);
+$scale-color-2: color(mediumaquamarine);
+$scale-color-3: color(mediumturquoise);
+$scale-color-4: color(gold);
+$scale-color-5: color(orange);
+$scale-color-6: color(coral);
+$scale-color-7: color(salmon);
+
+fa-icon[scale='1'] {
+  color: $scale-color-1;
+}
+
+ion-range {
+  ion-icon[slot='start'] {
+    margin-right: 10px;
+  }
+  ion-icon[slot='end'] {
+    margin-left: 10px;
+  }
+}
+
+ion-footer {
+  ion-col {
+    align-content: center;
+  }
+}

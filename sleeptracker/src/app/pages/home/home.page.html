@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Sleep Tracker
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="none">
+
+    <ion-list-header color="primary">
+      <ion-label>Log your overnight sleep</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>Went to bed at</ion-label>
+      <ion-datetime display-format="DDD MMM D, YYYY HH:mm A" placeholder="Tap to choose time" [(ngModel)]="sleepStart"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="sunny"></ion-icon>
+      <ion-label>Woke up at</ion-label>
+      <ion-datetime display-format="DDD MMM D, YYYY HH:mm A" placeholder="Tap to choose time" [(ngModel)]="sleepEnd"></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+
+  <div align="center">
+    <ion-button (click)="logOvernightData()" color="success">Save Overnight Sleep</ion-button>
+  </div>
+
+  <ion-list lines="none">
+    <ion-item-divider color="primary">
+      <ion-label>Log your sleepiness</ion-label>
+    </ion-item-divider>
+
+    <ion-list-header color="light">
+      <ion-label>Stanford Sleepiness Scale</ion-label>
+      <!-- TODO: Make this info icon do something cool -->
+      <ion-icon slot="end" name="information-circle-outline" size="medium"></ion-icon>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-range min="1" max="7" pin=true snaps=true color="primary" [(ngModel)]="sleepinessValue">
+        <ion-icon slot="start" name="happy"></ion-icon>
+        <ion-icon slot="end" name="sad"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item-divider color="salmon">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2"><strong>{{sleepinessValue}}</strong></ion-col>
+          <ion-col size="8">{{sleepinessValueText}}</ion-col>
+          <ion-col size="2"><fa-icon [icon]="sleepinessValueIcon" [style]="scaleValueStyleString" size="3x"></fa-icon></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item-divider>
+
+  </ion-list>
+
+  <div align="center">
+    <ion-button (click)="logSleepinessData()">Save Sleepiness Score</ion-button>
+  </div>
+  
+
+</ion-content>
+
+<!-- TODO: Change this to a real tabs layout with working links/routes -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button icon-only clear="true" href="/">
+            <ion-icon name="home" size="large"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button icon-only clear="true" href="/history">
+            <ion-icon name="calendar" size="large"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <!-- TODO: User can set bedtime and wakeup alarms & auto-log sleep from timer -->
+          <ion-button icon-only clear="true" href="/#"><ion-icon name="alarm" size="large"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

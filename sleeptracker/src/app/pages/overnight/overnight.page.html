@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-back-button defaultHref="history"></ion-back-button>
+      </ion-buttons>
+    <ion-title>{{overnightData.shortDate()}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onEdit()">
+        Edit
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list line="none">
+    <!-- Date header w/forward and back button arrows-->
+    <ion-list-header color="primary">
+      <ng-container *ngIf="previous">
+        <ion-icon slot="start" name="arrow-back" size="small"></ion-icon>
+      </ng-container>
+
+      <ion-label text-center>{{sleepData.shortDate()}}</ion-label>
+
+      <ng-container *ngIf="next">
+        <ion-icon slot="end" name="arrow-forward" size="small"></ion-icon>
+      </ng-container>
+    </ion-list-header>
+
+    <div *ngIf="isOvernightData">
+      <ion-item>
+        <ion-icon slot="start" name="moon"></ion-icon>
+        <ion-label>Went to Bed</ion-label>
+        <ion-text text-right>{{overnightData.sleepStartTime()}}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon slot="start" name="sunny"></ion-icon>
+        <ion-label>Woke Up</ion-label>
+        <ion-text text-right>{{overnightData.sleepEndTime()}}</ion-text>
+      </ion-item>
+    </div>
+
+    <div *ngIf="isSleepinessData">
+      <ion-item>
+        <ion-text text-center>Logged at: {{sleepData.dateString()}}}}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-text>{{sleepData.loggedValue()}}</ion-text>
+      </ion-item>
+    </div>
+  </ion-list>
+
+</ion-content>
