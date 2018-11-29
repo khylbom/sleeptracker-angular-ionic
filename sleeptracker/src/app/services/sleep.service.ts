@@ -2,21 +2,29 @@ import { Injectable } from '@angular/core';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+import { HttpClient } from '@angular/common/http';
+
+const sample_data_url = 'assets/json/sample_overnight_data.min.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SleepService {
+  private static LoadSampleData = true;
   private static LoadDefaultData = true;
   public static AllSleepData: SleepData[] = [];
   public static AllOvernightData: OvernightSleepData[] = [];
   public static AllSleepinessData: StanfordSleepinessData[] = [];
 
-  constructor() {
-    if (SleepService.LoadDefaultData) {
+  constructor(private http: HttpClient) {
+    if (SleepService.LoadSampleData) {
+      SleepService.LoadSampleData = this.addSavedData(sample_data_url);
+    } else if (SleepService.LoadDefaultData) {
       this.addDefaultData();
       SleepService.LoadDefaultData = false;
     }
+    console.log('sorting ' + SleepService.AllSleepData.length + ' by date');
+    this.sortAll();
   }
 
   private addDefaultData() {
@@ -33,6 +41,46 @@ export class SleepService {
   public logSleepinessData(sleepData: StanfordSleepinessData) {
     SleepService.AllSleepData.push(sleepData);
     SleepService.AllSleepinessData.push(sleepData);
+  }
+
+  // janky method forces constructor to wait for data to be loaded and logged
+  private addSavedData(url): boolean {
+    const promise = new Promise<boolean>(async (resolve, reject) => {
+      await this.loadDataFromUrl(url)
+        .then(() => {
+          resolve(true);
+        })
+        .catch(err => {
+          console.error(err);
+          reject(err);
+        });
+    });
+    return true;
+  }
+
+  // load the data file from url and log the data
+  private loadDataFromUrl(url: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.get(url)
+        .toPromise()
+        .then(res => res as string[])
+        .then(arr => {
+          arr.forEach(item => {
+            const sleepStart = new Date(item['sleepStart']);
+            const sleepEnd = new Date(item['sleepEnd']);
+            console.log('logging data');
+            this.logOvernightData(new OvernightSleepData(sleepStart, sleepEnd));
+          });
+        })
+        .then(() => {
+          console.log('loaded ' + SleepService.AllSleepData.length + ' from ' + url);
+          resolve(true);
+        })
+        .catch(err => {
+          console.error(err);
+          reject(err);
+        });
+    });
   }
 
   public find(id: string): OvernightSleepData | StanfordSleepinessData | undefined {
@@ -69,16 +117,10 @@ export class SleepService {
             && date1.getDate() === date2.getDate());
   }
 
-  public sort(all = true, overnight = true, sleepiness = true) {
-    if (all) {
-      SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate).reverse();
-    }
-    if (overnight || all) {
-      SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate).reverse();
-    }
-    if (sleepiness || all) {
-      SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate).reverse();
-    }
+  public sortAll() {
+    SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate);
+    SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate);
+    SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate);
   }
 
   private sortSleepData(arr: SleepData[]) {
@@ -95,5 +137,11 @@ export class SleepService {
     if (diff_ms < 0) { return -1; } // a is more recent
     if (diff_ms > 0) { return 1; }  // b is more recent
     return 0; // dates the same
+  }
+
+  // returns all sleep data sorted from most recent to oldest
+  get allSleepDataSorted() {
+    const allSorted = SleepService.AllSleepData.sort(this.sortByDate);
+    return allSorted.reverse();
   }
 }

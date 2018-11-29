@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Datetime } from '@ionic/angular';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-timepicker',
@@ -9,15 +8,10 @@ import { Datetime } from '@ionic/angular';
 export class TimepickerComponent implements OnInit {
   @Input() label = 'Date';
   @Input() show = true;
-  // @Input() minDate: Date;
-  // @Input() maxDate: Date;
   @Input() displayFormat = 'DDD MMM D, YYYY H:mm A';
   @Input() pickerFormat = this.displayFormat;
-  @Input() initValue = new Date();
-  @Input() minDate: string = undefined;
+  // @Input() minDate: string = undefined;
   date: Date;
-
-  picker: Datetime;
 
   constructor() { }
 

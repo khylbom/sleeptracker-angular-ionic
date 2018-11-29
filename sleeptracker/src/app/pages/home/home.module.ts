@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { TimepickerComponent } from 'src/app/components/timepicker/timepicker.component';
 import { SleepinessPickerComponent } from 'src/app/components/sleepiness-picker/sleepiness-picker.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SleepinessPickerComponent } from 'src/app/components/sleepiness-picker/
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    FontAwesomeModule
   ],
   declarations: [HomePage, TimepickerComponent, SleepinessPickerComponent]
 })
