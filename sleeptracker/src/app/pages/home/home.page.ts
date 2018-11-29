@@ -45,5 +45,13 @@ export class HomePage implements OnInit {
     console.log('Add clicked');
   }
 
+  toHistoryPage() {
+    this.router.navigateByUrl('/history');
+  }
+
+  toOvernightPage() {
+    this.router.navigateByUrl('/overnight');
+  }
+
 
 }

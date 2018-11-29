@@ -9,6 +9,7 @@ import { TabBarComponent } from '../components/tab-bar/tab-bar.component';
 @NgModule({
   declarations: [
     SleepinessPickerComponent,
+    TabBarComponent,
     TimepickerComponent
   ],
   imports: [

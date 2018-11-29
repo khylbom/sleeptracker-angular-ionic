@@ -19,25 +19,35 @@
 </ion-header>
 
 <ion-content padding>
+
+  <a href="/sleep-history">Test</a>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button href="/history">History</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button href="/overnight">Overnight</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button href="/sleep-history">Test</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   
-  <app-timepicker [(ngModel)]="sleepStart" (ionChange)="onSleepStartChanged()"
-    [show]=true
-    [label]="'Went to sleep at'"
-    [icon]="'moon'" >
+  <app-timepicker [(ngModel)]="sleepStart" [label]="'Went to sleep at'" [icon]="'moon'" >
   </app-timepicker>
 
-  <app-timepicker [(ngModel)]="sleepEnd"
-   [show]=true
-   [label]="'Woke up at'" 
-   [icon]="'sunny'" >
+  <app-timepicker [(ngModel)]="sleepEnd" [label]="'Woke up at'" [icon]="'sunny'" >
   </app-timepicker>
 
-  <app-sleepiness-picker [(ngModel)]="sleepinessScore"></app-sleepiness-picker>
+  <app-sleepiness-picker></app-sleepiness-picker>
 
 </ion-content>
 
 
-  <app-tab-bar></app-tab-bar>
+<app-tab-bar></app-tab-bar>
 
 
 

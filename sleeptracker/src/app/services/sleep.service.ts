@@ -1,22 +1,37 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+
+const sample_data_url = 'assets/json/sample_overnight_data.min.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SleepService {
+  private static LoadSampleData = true;
   private static LoadDefaultData = true;
   public static AllSleepData: SleepData[] = [];
   public static AllOvernightData: OvernightSleepData[] = [];
   public static AllSleepinessData: StanfordSleepinessData[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
+    if (SleepService.LoadSampleData) {
+      if (this.addSampleData(sample_data_url)) {
+        SleepService.LoadSampleData = false;
+        SleepService.LoadDefaultData = false;
+      } else {
+        console.warn('Sleep service could not load sample data');
+      }
+    }
     if (SleepService.LoadDefaultData) {
       this.addDefaultData();
       SleepService.LoadDefaultData = false;
     }
+    // sort all the data once, then just maintain sorted order
+    this.sortAll();
   }
 
   private addDefaultData() {
@@ -25,14 +40,57 @@ export class SleepService {
     this.logOvernightData(new OvernightSleepData(new Date('November 12, 2018 23:11:00'), new Date('November 13, 2018 08:03:00')));
   }
 
-  public logOvernightData(data) {
-    SleepService.AllSleepData.push(data);
-    SleepService.AllOvernightData.push(data);
+  public logOvernightData(sleepData: OvernightSleepData) {
+    // this.addMaintainSort(sleepData, SleepService.AllSleepData);
+    // this.addMaintainSort(sleepData, SleepService.AllOvernightData);
+    SleepService.AllSleepData.push(sleepData);
+    SleepService.AllOvernightData.push(sleepData);
   }
 
   public logSleepinessData(sleepData: StanfordSleepinessData) {
+    // this.addMaintainSort(sleepData, SleepService.AllSleepData);
+    // this.addMaintainSort(sleepData, SleepService.AllSleepinessData);
     SleepService.AllSleepData.push(sleepData);
     SleepService.AllSleepinessData.push(sleepData);
+  }
+
+  // janky method to force constructor to wait for async data processing
+  private addSampleData(url: string): boolean {
+    const promise = new Promise<boolean>(async (resolve, reject) => {
+      await this.loadDataFromUrl(url)
+        .then(() => {
+          resolve(true);
+        })
+        .catch(err => {
+          console.error(err);
+          reject(err);
+        });
+    });
+    return true;
+  }
+
+  // load sleep data as json, then parse and log
+  private loadDataFromUrl(url: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.get(url)
+        .toPromise()
+        .then(res => res as string[])
+        .then(arr => {
+          arr.forEach(item => {
+            const sleepStart = new Date(item['sleepStart']);
+            const sleepEnd = new Date(item['sleepEnd']);
+            this.logOvernightData(new OvernightSleepData(sleepStart, sleepEnd));
+          });
+        })
+        .then(() => {
+          console.log('loaded ' + SleepService.AllSleepData.length + ' from ' + url);
+          resolve(true);
+        })
+        .catch(err => {
+          console.error(err);
+          reject(err);
+        });
+    });
   }
 
   public find(id: string): OvernightSleepData | StanfordSleepinessData | undefined {
@@ -69,25 +127,11 @@ export class SleepService {
             && date1.getDate() === date2.getDate());
   }
 
-  public sort(all = true, overnight = true, sleepiness = true) {
-    if (all) {
-      SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate).reverse();
-    }
-    if (overnight || all) {
-      SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate).reverse();
-    }
-    if (sleepiness || all) {
-      SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate).reverse();
-    }
-  }
-
-  private sortSleepData(arr: SleepData[]) {
-   arr.sort((a, b) => {
-      const diff_ms = a.loggedAt.getMilliseconds() - b.loggedAt.getMilliseconds();
-      if (diff_ms < 0) { return -1; }
-      if (diff_ms > 0) { return 1; }
-      return 0;
-    });
+  // maintain the arrays in sorted order beginning with most recent logs
+  private sortAll() {
+    SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate);
+    SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate);
+    SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate);
   }
 
   private sortByDate(a: SleepData, b: SleepData) {
@@ -95,5 +139,24 @@ export class SleepService {
     if (diff_ms < 0) { return -1; } // a is more recent
     if (diff_ms > 0) { return 1; }  // b is more recent
     return 0; // dates the same
+  }
+
+  private addMaintainSort(sleepData: SleepData, arr: SleepData[]) {
+    let index = 0;
+    while (index < arr.length) {
+      // go through data array until we find the first entry older than this
+      if (this.sortByDate(arr[index], sleepData) < 0) {
+        index++;
+      } else {
+        if (index === 0) { // first element was older
+          arr.unshift(sleepData); // insert at start of array
+          return;
+        }
+
+        const arrHead = arr.slice(0, index - 1); // more recent elements
+        const arrTail = arr.slice(index, arr.length - 1); // older elements
+        arr = arrHead.concat(sleepData, arrTail);
+      }
+    }
   }
 }
