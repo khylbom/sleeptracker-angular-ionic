@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { TimepickerComponent } from 'src/app/components/timepicker/timepicker.component';
 import { SleepinessPickerComponent } from 'src/app/components/sleepiness-picker/sleepiness-picker.component';
+import { TabBarComponent } from 'src/app/components/tab-bar/tab-bar.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,11 @@ import { SleepinessPickerComponent } from 'src/app/components/sleepiness-picker/
       }
     ])
   ],
-  declarations: [HomePage, TimepickerComponent, SleepinessPickerComponent]
+  declarations: [
+    HomePage,
+    TabBarComponent,
+    TimepickerComponent,
+    SleepinessPickerComponent
+  ]
 })
 export class HomePageModule {}

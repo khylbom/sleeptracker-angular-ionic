@@ -1,26 +1,57 @@
 <ion-header>
   <ion-toolbar>
+
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+
     <ion-title>
       Sleep Tracker
     </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onAdd()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   
-  <ion-button href="/history">
-    History
-  </ion-button>
+  <app-timepicker [(ngModel)]="sleepStart" (ionChange)="onSleepStartChanged()"
+    [show]=true
+    [label]="'Went to sleep at'"
+    [icon]="'moon'" >
+  </app-timepicker>
 
-  <ion-button href="/overnight">
-    Overnight Data
-  </ion-button>
-  
-  <app-timepicker></app-timepicker>
+  <app-timepicker [(ngModel)]="sleepEnd"
+   [show]=true
+   [label]="'Woke up at'" 
+   [icon]="'sunny'" >
+  </app-timepicker>
 
-  <app-sleepiness-picker></app-sleepiness-picker>
+  <app-sleepiness-picker [(ngModel)]="sleepinessScore"></app-sleepiness-picker>
 
 </ion-content>
+
+
+  <app-tab-bar></app-tab-bar>
+
+
+
+  <!-- <ion-tab-bar slot="bottom">
+
+    <ion-tab-button href="/">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button href="/history">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>History</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar> -->
+<!-- </ion-footer> -->

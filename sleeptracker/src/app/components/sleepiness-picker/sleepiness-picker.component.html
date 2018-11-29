@@ -13,3 +13,26 @@
     {{scaleValue}}
   </ion-item>
 </ion-list>
+
+<ion-button color="success" expand="full" (click)="onSave()">
+  <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+  Save
+</ion-button>
+<ion-button color="danger" expand="block" (click)="onCancel()">
+  <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+  Cancel
+</ion-button>
+
+<ion-buttons slot="start">
+
+  <ion-button color="danger" (click)="onCancel()">
+    <ion-icon slot="primary" name="cancel">
+      Cancel
+    </ion-icon>
+  </ion-button>
+
+  <ion-button color="success" (click)="onSave()">
+    <ion-icon slot="secondary" name="add"></ion-icon>
+    Save
+  </ion-button>
+</ion-buttons>

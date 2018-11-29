@@ -4,6 +4,7 @@ import { TimepickerComponent } from '../components/timepicker/timepicker.compone
 import { FormsModule } from '@angular/forms';
 import { SleepinessPickerComponent } from '../components/sleepiness-picker/sleepiness-picker.component';
 import { IonicModule } from '@ionic/angular';
+import { TabBarComponent } from '../components/tab-bar/tab-bar.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { IonicModule } from '@ionic/angular';
     CommonModule,
     FormsModule,
     SleepinessPickerComponent,
+    TabBarComponent,
     TimepickerComponent
   ]
 })

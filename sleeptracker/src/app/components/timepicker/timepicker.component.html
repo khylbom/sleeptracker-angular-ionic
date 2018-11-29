@@ -1,6 +1,12 @@
+<ion-item-divider>
+  <ion-label>{{label}}</ion-label>
+</ion-item-divider>
+
 <ion-item *ngIf="show">
-  <ion-label position="fixed">{{label}}</ion-label>
-  <ion-datetime #picker [(ngModel)]="date"
+  <ion-label position="fixed">
+    <ion-icon slot="start" [name]="icon"></ion-icon>
+  </ion-label>
+  <ion-datetime [(ngModel)]="date"
       [displayFormat]="displayFormat"
       [pickerFormat]="pickerFormat"
       [value]="initDate"
