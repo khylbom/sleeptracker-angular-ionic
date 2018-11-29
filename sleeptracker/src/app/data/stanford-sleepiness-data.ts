@@ -13,8 +13,9 @@ export class StanfordSleepinessData extends SleepData {
     'Sleepy, woozy, fighting sleep; prefer to lie down', // 6 fa-frown-open
     'No longer fighting sleep, sleep onset soon; having dream-like thoughts']; // 7 fa-tired
 
-    public static ScaleIcons = [undefined,
-    ]
+    public static ScaleColors = [undefined, 'salmon', 'coral', 'orange',
+    'gold', 'mediumturquoise', 'mediumaquamarine', 'mediumspringgreen'];
+
     private loggedValue: number;
 
     constructor(loggedValue: number, loggedAt: Date = new Date()) {

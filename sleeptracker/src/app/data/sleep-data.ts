@@ -1,7 +1,7 @@
 import * as shortid from 'shortid';
 
 export class SleepData {
-    public static AllTags: string[]
+    public static AllTags: string[];
     public id: string;
     public loggedAt: Date;
     public tags: string[] = []; // user-provided tags

@@ -22,7 +22,7 @@ export class OvernightSleepData extends SleepData {
     }
 
     dateString(): string {
-        return 'Night of ' + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        return this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     }
 
     date(): Date {
