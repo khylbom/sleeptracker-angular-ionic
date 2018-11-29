@@ -1,4 +1,4 @@
-<img align="right" width="100" height="100" src="src/assets/icon/favicon.png">
+<img align="right" width="100" height="100" src="sleeptracker/src/assets/icon/favicon.png">
 
 a4-sleeptracker-ionic
 =====================
@@ -10,6 +10,7 @@ a4-sleeptracker-ionic
 <!-- toc -->
 
 - [Online Resources](#online-resources)
+  - [10 Common Ionic Problems & Error Messages](#10-common-ionic-problems--error-messages-and-how-to-fix-them)
   - [Using FontAwesome 5 in Angular and Ionic](#using-fontawesome-5-in-angular-and-ionic)
     - [Installation](#installation)
     - [Usage](#usage)
@@ -19,12 +20,20 @@ This assignment took me approximately 50 hours of focused, dedicated work time.
 
 ## Online Resources
 
+### 10 Common Ionic Problems & Error Messages (And How to Fix Them)
+Article from https://devdactic.com on January 16, 2018 by Simon
+> https://devdactic.com/10-ionic-problems/
+
+This article didn't always help me fix everything, but at least it gave me validation and reassurance that at least
+the errors and problems I kept running into were fairly normal!
+
 ### Using FontAwesome 5 in Angular and Ionic
 
 **Official Angular Font Awesome component:** [API docs](https://www.npmjs.com/package/@fortawesome/angular-fontawesome), [GitHub project](https://github.com/FortAwesome/angular-fontawesome)
 
 > [angular-fontawesome](https://fontawesome.com/how-to-use/on-the-web/using-with/angular)
-  
+
+Below are provided mostly as notes as reference for myself, and are taken directly from above sources.
 #### Installation
 
   ```sh
