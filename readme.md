@@ -1,4 +1,4 @@
-<img align="right" width="100" height="100" src="src/assets/icon/favicon.png">
+<img align="right" width="100" height="100" src="sleeptracker/src/assets/icon/favicon.png">
 
 a4-sleeptracker-ionic
 =====================
