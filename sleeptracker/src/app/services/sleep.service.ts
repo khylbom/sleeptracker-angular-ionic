@@ -18,13 +18,11 @@ export class SleepService {
 
   constructor(private http: HttpClient) {
     if (SleepService.LoadSampleData) {
-      SleepService.LoadSampleData = this.addSavedData(sample_data_url);
+      this.addSavedData(sample_data_url);
     } else if (SleepService.LoadDefaultData) {
       this.addDefaultData();
       SleepService.LoadDefaultData = false;
     }
-    console.log('sorting ' + SleepService.AllSleepData.length + ' by date');
-    this.sortAll();
   }
 
   private addDefaultData() {
@@ -33,29 +31,36 @@ export class SleepService {
     this.logOvernightData(new OvernightSleepData(new Date('November 12, 2018 23:11:00'), new Date('November 13, 2018 08:03:00')));
   }
 
-  public logOvernightData(data) {
-    SleepService.AllSleepData.push(data);
-    SleepService.AllOvernightData.push(data);
+  public logOvernightData(sleepData: OvernightSleepData) {
+    // SleepService.AllSleepData.unshift(sleepData);
+    // SleepService.AllOvernightData.unshift(sleepData);
+    SleepService.AllSleepData.push(sleepData);
+    SleepService.AllOvernightData.push(sleepData);
   }
 
   public logSleepinessData(sleepData: StanfordSleepinessData) {
-    SleepService.AllSleepData.push(sleepData);
-    SleepService.AllSleepinessData.push(sleepData);
+    SleepService.AllSleepData.unshift(sleepData);
+    SleepService.AllSleepinessData.unshift(sleepData);
+    // SleepService.AllSleepData.push(sleepData);
+    // SleepService.AllSleepinessData.push(sleepData);
   }
 
   // janky method forces constructor to wait for data to be loaded and logged
-  private addSavedData(url): boolean {
-    const promise = new Promise<boolean>(async (resolve, reject) => {
+  private async addSavedData(url) {
+    console.log('addSavedData() awaiting loadDataFromUrl()...');
+    await new Promise<void>(async (resolve, reject) => {
       await this.loadDataFromUrl(url)
         .then(() => {
-          resolve(true);
+          resolve();
         })
         .catch(err => {
-          console.error(err);
+          console.error('addSavedData() rejecting: ' + err);
           reject(err);
         });
+    }).then(() => {
+      console.log('addSavedData() returning\nloaded and logged' + SleepService.AllSleepData.length);
+      console.log('sorting ' + SleepService.AllSleepData.length + ' by date');
     });
-    return true;
   }
 
   // load the data file from url and log the data
@@ -69,11 +74,12 @@ export class SleepService {
             const sleepStart = new Date(item['sleepStart']);
             const sleepEnd = new Date(item['sleepEnd']);
             console.log('logging data');
-            this.logOvernightData(new OvernightSleepData(sleepStart, sleepEnd));
+            const overnightSleepData = new OvernightSleepData(sleepStart, sleepEnd);
+            this.logOvernightData(overnightSleepData);
           });
         })
         .then(() => {
-          console.log('loaded ' + SleepService.AllSleepData.length + ' from ' + url);
+          console.log('loadDataFromUrl() loaded and logged ' + SleepService.AllSleepData.length + ' from ' + url);
           resolve(true);
         })
         .catch(err => {
@@ -117,11 +123,22 @@ export class SleepService {
             && date1.getDate() === date2.getDate());
   }
 
-  public sortAll() {
-    SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate);
-    SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate);
-    SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate);
+  // TODO: we shouldn't need to sort since the data is already in sorted order
+  //       except data is in order oldest to most recent; change push to different fn?
+  public async sortAll(): Promise<void> {
+    return new Promise<void>(() => {
+      SleepService.AllSleepData.sort(this.sortByDate);
+    });
+    // SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate);
+    // SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate);
+    // SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate);
   }
+
+  // public sortAllSleepData(): Promise<void> {
+  //   return new Promise<void>(() => {
+  //     SleepService.AllSleepData.sort(this.sortByDate);
+  //   });
+  // }
 
   private sortSleepData(arr: SleepData[]) {
    arr.sort((a, b) => {
@@ -139,9 +156,9 @@ export class SleepService {
     return 0; // dates the same
   }
 
-  // returns all sleep data sorted from most recent to oldest
-  get allSleepDataSorted() {
-    const allSorted = SleepService.AllSleepData.sort(this.sortByDate);
-    return allSorted.reverse();
-  }
+  // // returns all sleep data sorted from most recent to oldest
+  // get allSleepDataSorted() {
+  //   const allSorted = SleepService.AllSleepData.sort(this.sortByDate);
+  //   return allSorted.reverse();
+  // }
 }

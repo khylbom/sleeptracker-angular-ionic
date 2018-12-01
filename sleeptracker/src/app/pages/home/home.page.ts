@@ -29,8 +29,8 @@ export class HomePage implements OnInit {
 
   logOvernightData() {
     // I don't know why we have to reinitialize, but won't work unless we do it this way
-    this.sleepStart = new Date(this.sleepStart.toISOString());
-    this.sleepEnd = new Date(this.sleepEnd.toISOString());
+    this.sleepStart = new Date(this.sleepStart);
+    this.sleepEnd = new Date(this.sleepEnd);
 
     // TODO: Something funky happens with the time zones. Input is 1 hour behind actual log entry
     this.sleepService.logOvernightData(new OvernightSleepData(this.sleepStart, this.sleepEnd));
