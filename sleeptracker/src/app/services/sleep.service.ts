@@ -32,17 +32,13 @@ export class SleepService {
   }
 
   public logOvernightData(sleepData: OvernightSleepData) {
-    // SleepService.AllSleepData.unshift(sleepData);
-    // SleepService.AllOvernightData.unshift(sleepData);
     SleepService.AllSleepData.push(sleepData);
     SleepService.AllOvernightData.push(sleepData);
   }
 
   public logSleepinessData(sleepData: StanfordSleepinessData) {
-    SleepService.AllSleepData.unshift(sleepData);
-    SleepService.AllSleepinessData.unshift(sleepData);
-    // SleepService.AllSleepData.push(sleepData);
-    // SleepService.AllSleepinessData.push(sleepData);
+    SleepService.AllSleepData.push(sleepData);
+    SleepService.AllSleepinessData.push(sleepData);
   }
 
   // janky method forces constructor to wait for data to be loaded and logged
@@ -124,29 +120,12 @@ export class SleepService {
   }
 
   // TODO: we shouldn't need to sort since the data is already in sorted order
-  //       except data is in order oldest to most recent; change push to different fn?
-  public async sortAll(): Promise<void> {
-    return new Promise<void>(() => {
-      SleepService.AllSleepData.sort(this.sortByDate);
-    });
-    // SleepService.AllSleepData = SleepService.AllSleepData.sort(this.sortByDate);
-    // SleepService.AllOvernightData = SleepService.AllOvernightData.sort(this.sortByDate);
-    // SleepService.AllSleepinessData = SleepService.AllSleepinessData.sort(this.sortByDate);
-  }
-
-  // public sortAllSleepData(): Promise<void> {
-  //   return new Promise<void>(() => {
-  //     SleepService.AllSleepData.sort(this.sortByDate);
-  //   });
-  // }
-
-  private sortSleepData(arr: SleepData[]) {
-   arr.sort((a, b) => {
-      const diff_ms = a.loggedAt.getMilliseconds() - b.loggedAt.getMilliseconds();
-      if (diff_ms < 0) { return -1; }
-      if (diff_ms > 0) { return 1; }
-      return 0;
-    });
+  //       except data is in order oldest to most recent, so page reverses it,
+  //       but we could simply use unshift instead of push... performance?
+  public sortAll() {
+    SleepService.AllSleepData.sort(this.sortByDate);
+    SleepService.AllOvernightData.sort(this.sortByDate);
+    SleepService.AllSleepinessData.sort(this.sortByDate);
   }
 
   private sortByDate(a: SleepData, b: SleepData) {
@@ -155,10 +134,4 @@ export class SleepService {
     if (diff_ms > 0) { return 1; }  // b is more recent
     return 0; // dates the same
   }
-
-  // // returns all sleep data sorted from most recent to oldest
-  // get allSleepDataSorted() {
-  //   const allSorted = SleepService.AllSleepData.sort(this.sortByDate);
-  //   return allSorted.reverse();
-  // }
 }
