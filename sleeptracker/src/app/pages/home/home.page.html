@@ -32,7 +32,9 @@
   </ion-list>
 
   <div align="center">
-    <ion-button (click)="logOvernightData()" color="success">Save Overnight Sleep</ion-button>
+    <ion-button (click)="logOvernightData()" color="success">
+      Save Overnight Sleep
+    </ion-button>
   </div>
 
   <ion-list lines="none">
@@ -66,32 +68,9 @@
   </ion-list>
 
   <div align="center">
-    <ion-button (click)="logSleepinessData()">Save Sleepiness Score</ion-button>
+    <ion-button (click)="logSleepinessData()" color="success">
+      Save Sleepiness Score
+    </ion-button>
   </div>
-  
 
 </ion-content>
-
-<!-- TODO: Change this to a real tabs layout with working links/routes -->
-<ion-footer>
-  <ion-toolbar>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-button icon-only clear="true" href="/">
-            <ion-icon name="home" size="large"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button icon-only clear="true" href="/history">
-            <ion-icon name="calendar" size="large"></ion-icon>
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <!-- TODO: User can set bedtime and wakeup alarms & auto-log sleep from timer -->
-          <ion-button icon-only clear="true" href="/#"><ion-icon name="alarm" size="large"></ion-icon></ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-</ion-footer>
